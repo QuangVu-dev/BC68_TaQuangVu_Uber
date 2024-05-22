@@ -118,25 +118,28 @@ document.getElementById("btnInHoaDon").onclick = () => {
   let giaTienKmTu1Den19 = kiemTraGiaTienTu1Den19(loaiXe);
   let giaTienKmTu19TroLen = kiemTraGiaTienTu19TroLen(loaiXe);
   let giaTienThoiGianCho = kiemTraGiaTienCho(loaiXe);
-  let tongTien = 0;
-  let tongTienChay = 0;
-  let tongTienCho = 0;
+  let sokmDauTien = 0;
+  let soKmTu1Den19 = 0;
+  let sokmTu19TroDi = 0;
   if (soKm <= 1 && soKm > 0) {
-    tongTienChay = soKm * giaTienKmDauTien;
+    sokmDauTien = soKm;
   } else if (soKm > 1 && soKm <= 19) {
-    tongTienChay = giaTienKmDauTien + (soKm - 1) * giaTienKmTu1Den19;
+    sokmDauTien = 1;
+    soKmTu1Den19 = soKm - 1;
   } else {
-    tongTienChay =
-      giaTienKmDauTien +
-      18 * giaTienKmTu1Den19 +
-      (soKm - 19) * giaTienKmTu19TroLen;
+    sokmDauTien = 1;
+    soKmTu1Den19 = 18;
+    sokmTu19TroDi = soKm - 19;
   }
+  let tienChayKmDauTien = sokmDauTien * giaTienKmDauTien;
+  let tienChayKmTu1Den19 = soKmTu1Den19 * giaTienKmTu1Den19;
+  let tienChayKmTu19TroDi = sokmTu19TroDi * giaTienKmTu19TroLen;
+  let tongTienCho = 0;
   if ((thoiGianCho) => 3) {
     tongTienCho = Math.floor(thoiGianCho / 3) * giaTienThoiGianCho;
-  } else {
-    tongTienCho == 0;
   }
-  tongTien = tongTienChay + tongTienCho;
+  let tongTien =
+    tienChayKmDauTien + tienChayKmTu1Den19 + tienChayKmTu19TroDi + tongTienCho;
 
   let table = `<table class="table" border="1px" cellpading="10px" cellspacing="0" width="100%">
   <tr>
@@ -152,19 +155,19 @@ document.getElementById("btnInHoaDon").onclick = () => {
   <td>KM ĐẦU TIÊN</td>
   <td>1</td>
   <td>${giaTienKmDauTien / 1000}</td>
-  <td>${(1 * giaTienKmDauTien) / 1000}</td>
+  <td>${tienChayKmDauTien / 1000}</td>
   </tr>
   <tr>
   <td>Từ 1 đến 19 km</td>
-  <td>${soKm > 1 ? soKm - 1 : 0}</td>
+  <td>${soKmTu1Den19}</td>
   <td>${giaTienKmTu1Den19 / 1000}</td>
-  <td>${((soKm > 1 ? soKm - 1 : 0) * giaTienKmTu1Den19) / 1000}</td>
+  <td>${tienChayKmTu1Den19 / 1000}</td>
   </tr>
   <tr>
   <td>Từ 19km trở lên</td>
-  <td>${soKm > 19 ? soKm - 19 : 0}</td>
+  <td>${sokmTu19TroDi}</td>
   <td>${giaTienKmTu19TroLen / 1000}</td>
-  <td>${((soKm > 19 ? soKm - 19 : 0) * giaTienKmTu1Den19) / 1000}</td>
+  <td>${tienChayKmTu19TroDi / 1000}</td>
   </tr>
   <tr>
   <td>Thời gian chờ</td>
